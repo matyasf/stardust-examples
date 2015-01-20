@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="follow-mouse">
+    <configurations>
+      <configuration name="follow-mouse" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/build">
+        <dependencies target-player="15.0">
+          <entries>
+            <entry module-name="stardust-library" build-configuration-name="stardust-library">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry module-name="stardust-sim-loader" build-configuration-name="stardust-sim-loader">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="93f335db-a220-4271-8e57-c93ba72b907c">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="AIR15" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="false" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="AIR15" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="stardust-sim-loader" exported="" />
+    <orderEntry type="module" module-name="stardust-library" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="93f335db-a220-4271-8e57-c93ba72b907c" />
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.gamua/starling-framework/1.6.0/5f2a3da01ab59b346da621057ed803fa2443f54c/starling-framework-1.6.0.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
