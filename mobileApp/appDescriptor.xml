@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/15.0">
+
+    <id>com.funkypanda.rinoa</id>
+    <filename>Starling test</filename>
+    <name>Starling test</name>
+    <versionNumber>1.0.0</versionNumber>
+    <versionLabel>1.0.0</versionLabel>
+
+    <initialWindow>
+        <!-- The main SWF or HTML file of the application. Required. -->
+        <content>Main.swf</content>
+        <renderMode>direct</renderMode>
+        <fullScreen>true</fullScreen>
+
+        <autoOrients>true</autoOrients>
+        <visible>true</visible>
+    </initialWindow>
+
+    <iPhone>
+        <InfoAdditions><![CDATA[
+			<key>UIDeviceFamily</key>
+			<array>
+				<string>1</string>
+				<string>2</string>
+			</array>
+		]]></InfoAdditions>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </iPhone>
+
+    <android>
+        <manifestAdditions>
+            <![CDATA[
+            <manifest android:installLocation="auto">
+                <uses-permission android:name="android.permission.INTERNET" />
+            </manifest>
+        ]]>
+        </manifestAdditions>
+    </android>
+
+</application>
