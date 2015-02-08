@@ -3,6 +3,7 @@ package
 
 import com.funkypandagame.stardustplayer.SimLoader;
 import com.funkypandagame.stardustplayer.SimPlayer;
+import com.funkypandagame.stardustplayer.project.ProjectValueObject;
 
 import flash.events.MouseEvent;
 
@@ -42,6 +43,7 @@ public class TestApp extends Sprite
     private var cnt : uint = 0;
     private var explode : CustomExplode;
     private var emitter : Emitter2D;
+    private var project : ProjectValueObject;
 
     public function TestApp()
     {
@@ -64,12 +66,14 @@ public class TestApp extends Sprite
 
     private function onSimLoaded(event : flash.events.Event) : void
     {
-        player.setSimulation(loader.project, simContainer);
+        project = loader.createProjectInstance();
+        loader.destroy(); // this frees up memory used by the loader
+        player.setSimulation(project, simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 
-        // this simulation has just one emitter, so we need to care about one only
-        emitter = loader.project.emittersArr[0];
+        // this simulation has just one emitter
+        emitter = project.emittersArr[0];
 
         // Add a custom action that was not made with the editor
         explode = new CustomExplode(0,0, 25, 12, 200, 0);
@@ -95,7 +99,7 @@ public class TestApp extends Sprite
         cnt++;
         if (cnt%60 == 0)
         {
-            infoTF.text = "particles: " + loader.project.numberOfParticles;
+            infoTF.text = "particles: " + project.numberOfParticles;
         }
     }
 

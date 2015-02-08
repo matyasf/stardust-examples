@@ -3,6 +3,8 @@ package main
 import com.funkypandagame.stardustplayer.SimLoader;
 import com.funkypandagame.stardustplayer.SimPlayer;
 import com.funkypandagame.stardustplayer.emitter.EmitterValueObject;
+import com.funkypandagame.stardustplayer.project.ProjectValueObject;
+
 import flash.events.MouseEvent;
 
 import idv.cjcat.stardustextended.common.clocks.*
@@ -31,6 +33,7 @@ public class TestApp extends Sprite
     private var player : SimPlayer;
     private var loader : SimLoader;
     private var infoTF : TextField;
+    private var project : ProjectValueObject;
     private var cnt : uint = 0;
 
     public function TestApp()
@@ -44,7 +47,7 @@ public class TestApp extends Sprite
         var addParticlesButton : MyButton = new MyButton("+100 particles");
         addParticlesButton.addEventListener(MouseEvent.CLICK, function (evt : MouseEvent) : void
         {
-            for each (var emitterVO:EmitterValueObject in loader.project.emitters)
+            for each (var emitterVO:EmitterValueObject in project.emitters)
             {
                 // this emitter's particles live on average for 200 frames, thus adding 0.5 particles/frame
                 // will raise the total particles on screen by 100
@@ -58,7 +61,7 @@ public class TestApp extends Sprite
         var lowerParticlesButton : MyButton = new MyButton("-50 particles");
         lowerParticlesButton.addEventListener(MouseEvent.CLICK, function (evt : MouseEvent) : void
         {
-            for each (var emitterVO:EmitterValueObject in loader.project.emitters)
+            for each (var emitterVO:EmitterValueObject in project.emitters)
             {
                 SteadyClock(emitterVO.emitter.clock).ticksPerCall -= 0.25;
             }
@@ -78,7 +81,10 @@ public class TestApp extends Sprite
 
     private function onSimLoaded(event : flash.events.Event) : void
     {
-        player.setSimulation(loader.project, simContainer);
+        loader.removeEventListener(flash.events.Event.COMPLETE, onSimLoaded);
+        project = loader.createProjectInstance();
+        loader.destroy(); // call this if you dont plan to create any more instances to free up memory
+        player.setSimulation(project, simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
     }
@@ -89,7 +95,7 @@ public class TestApp extends Sprite
         cnt++;
         if (cnt%60 == 0)
         {
-            infoTF.text = "particles: " + loader.project.numberOfParticles;
+            infoTF.text = "particles: " + project.numberOfParticles;
         }
     }
 
