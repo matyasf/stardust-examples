@@ -17,6 +17,7 @@ import idv.cjcat.stardustextended.common.initializers.Initializer;
 
 import idv.cjcat.stardustextended.twoD.emitters.Emitter2D;
 import idv.cjcat.stardustextended.twoD.initializers.PositionAnimated;
+import idv.cjcat.stardustextended.twoD.starling.StardustStarlingRenderer;
 import idv.cjcat.stardustextended.twoD.zones.SinglePoint;
 
 import starling.core.Starling;
@@ -54,6 +55,9 @@ public class TestApp extends Sprite
         simContainer.touchable = false;
         addChild(simContainer);
 
+        // optimize the app for 1 emitter with maximum of 5000 particles
+        StardustStarlingRenderer.init(1, 5000);
+
         player = new SimPlayer();
         loader = new SimLoader();
         loader.addEventListener(flash.events.Event.COMPLETE, onSimLoaded);
@@ -67,7 +71,10 @@ public class TestApp extends Sprite
     private function onSimLoaded(event : flash.events.Event) : void
     {
         project = loader.createProjectInstance();
-        loader.destroy(); // this frees up memory used by the loader
+        loader.destroy(); // this frees up memory used by the loader. Call it if you dont want to create anymore instances.
+        loader = null;
+        assetInstance = null;
+
         player.setSimulation(project, simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);

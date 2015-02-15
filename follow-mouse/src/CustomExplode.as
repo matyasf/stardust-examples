@@ -27,7 +27,7 @@ public class CustomExplode extends Action2D {
      */
     public var strength:Number;
     /**
-     * The speed of shockwave propogation, in pixels per emitter step.
+     * The speed of shockwave propagation, in pixels per emitter step.
      */
     public var growSpeed:Number;
     /**
@@ -65,7 +65,6 @@ public class CustomExplode extends Action2D {
 
     /**
      * Causes a shockwave to spread out from the center.
-     * @param	e
      */
     public function explode():void {
         discharged = false;
@@ -77,6 +76,8 @@ public class CustomExplode extends Action2D {
         if (discharged) return;
 
         var p2D:Particle2D = Particle2D(particle);
+        // Stardust has object pools for various objects that it uses often to prevent garbage collection
+        // Vect2D is a subClass of Point with some extra functions
         var r:Vec2D = Vec2DPool.get(p2D.x - x, p2D.y - y);
         var len:Number = r.length;
         if (len < epsilon) len = epsilon;
@@ -85,7 +86,6 @@ public class CustomExplode extends Action2D {
             p2D.vx += r.x * timeDelta;
             p2D.vy += r.y * timeDelta;
         }
-
         Vec2DPool.recycle(r);
     }
 
@@ -97,41 +97,5 @@ public class CustomExplode extends Action2D {
         if (_currentInnerRadius > maxDistance) discharged = true;
     }
 
-
-    //XML
-    //------------------------------------------------------------------------------------------------
-
-    override public function getXMLTagName():String {
-        return "Explode";
-    }
-
-    override public function toXML():XML {
-        var xml:XML = super.toXML();
-
-        xml.@x = x;
-        xml.@y = y;
-        xml.@strength = strength;
-        xml.@growSpeed = growSpeed;
-        xml.@maxDistance = maxDistance;
-        xml.@attenuationPower = attenuationPower;
-        xml.@epsilon = epsilon;
-
-        return xml;
-    }
-
-    override public function parseXML(xml:XML, builder:XMLBuilder = null):void {
-        super.parseXML(xml, builder);
-
-        if (xml.@x.length()) x = parseFloat(xml.@x);
-        if (xml.@y.length()) y = parseFloat(xml.@y);
-        if (xml.@strength.length()) strength = parseFloat(xml.@strength);
-        if (xml.@growSpeed.length()) growSpeed = parseFloat(xml.@growSpeed);
-        if (xml.@maxDistance.length()) maxDistance = parseFloat(xml.@maxDistance);
-        if (xml.@attenuationPower.length()) attenuationPower = parseFloat(xml.@attenuationPower);
-        if (xml.@epsilon.length()) epsilon = parseFloat(xml.@epsilon);
-    }
-
-    //------------------------------------------------------------------------------------------------
-    //end of XML
 }
 }
