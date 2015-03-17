@@ -14,6 +14,7 @@ public class MyButton extends SimpleButton
         tf.defaultTextFormat = new TextFormat(null, 22);
         tf.text = label;
         tf.width = tf.textWidth + 5;
+        tf.height = 30;
         tf.y = 10;
 
         const up : Sprite = new Sprite();

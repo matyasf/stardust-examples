@@ -3,7 +3,6 @@ package
 
 import idv.cjcat.stardustextended.common.emitters.Emitter;
 import idv.cjcat.stardustextended.common.particles.Particle;
-import idv.cjcat.stardustextended.common.xml.XMLBuilder;
 import idv.cjcat.stardustextended.twoD.actions.Action2D;
 import idv.cjcat.stardustextended.twoD.geom.Vec2D;
 import idv.cjcat.stardustextended.twoD.geom.Vec2DPool;

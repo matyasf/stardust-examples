@@ -75,7 +75,8 @@ public class TestApp extends Sprite
         loader = null;
         assetInstance = null;
 
-        player.setSimulation(project, simContainer);
+        player.setProject(project);
+        player.setRenderTarget(simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 
