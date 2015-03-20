@@ -11,9 +11,8 @@ import flash.events.Event;
 
 import flash.utils.ByteArray;
 
-import idv.cjcat.stardustextended.common.clocks.SteadyClock;
-
 import idv.cjcat.stardustextended.twoD.emitters.Emitter2D;
+
 import idv.cjcat.stardustextended.twoD.starling.StardustStarlingRenderer;
 import idv.cjcat.stardustextended.twoD.zones.Zone;
 
@@ -30,7 +29,7 @@ import starling.utils.VAlign;
 public class TestApp extends Sprite
 {
 
-    [Embed(source="/../assets/gravityFields.sde", mimeType = 'application/octet-stream')]
+    [Embed(source="/../assets/blazing_fire.sde", mimeType = 'application/octet-stream')]
     private static var Asset:Class;
     private static var assetInstance:ByteArray = new Asset();
 
@@ -39,9 +38,8 @@ public class TestApp extends Sprite
     private var loader : SimLoader;
     private var infoTF : TextField;
     private var cnt : uint = 0;
-    private var explode : CustomExplode;
-    private var emitter : Emitter2D;
     private var project : ProjectValueObject;
+    private var explode : CustomExplode;
 
     public function TestApp()
     {
@@ -52,8 +50,8 @@ public class TestApp extends Sprite
         simContainer.touchable = false;
         addChild(simContainer);
 
-        // optimize the app for 1 emitter with maximum of 5000 particles
-        StardustStarlingRenderer.init(1, 5000);
+        // The more buffers the smoother the performance under load, but it takes up more memory.
+        StardustStarlingRenderer.init(10, 5000);
 
         player = new SimPlayer();
         loader = new SimLoader();
@@ -72,17 +70,16 @@ public class TestApp extends Sprite
         loader = null;
         assetInstance = null;
 
+        // this simulation has just one emitter
+        var emitter : Emitter2D = project.emittersArr[0];
+        // Add a custom action that was not made with the editor
+        explode = new CustomExplode(0, 0, 30, 30, 35, 0.91, 6);
+        emitter.addAction(explode);
+
         player.setProject(project);
         player.setRenderTarget(simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
-
-        // this simulation has just one emitter
-        emitter = project.emittersArr[0];
-
-        // Add a custom action that was not made with the editor
-        explode = new CustomExplode(0,0, 25, 12, 200, 0);
-        emitter.addAction(explode);
 
         Starling.current.nativeStage.addEventListener(MouseEvent.CLICK, onClick);
         Starling.current.nativeStage.addEventListener(MouseEvent.MOUSE_MOVE, onMove);
@@ -90,15 +87,6 @@ public class TestApp extends Sprite
 
     private function onEnterFrame(event : starling.events.Event) : void
     {
-        if (explode.discharged == false)
-        {
-            // do not emit any particles during the explosion
-            SteadyClock(emitter.clock).ticksPerCall = 0;
-        }
-        else
-        {
-            SteadyClock(emitter.clock).ticksPerCall = 10;
-        }
         player.stepSimulation();
 
         cnt++;
@@ -117,12 +105,12 @@ public class TestApp extends Sprite
 
     private function onMove(evt : MouseEvent) : void
     {
+        evt.updateAfterEvent();
         //Set the emitter's position to the pointer coordinate
         for each (var zone : Zone in project.initialPositions)
         {
-            zone.setPosition(evt.stageX, evt.stageY);
+            zone.setPosition(evt.stageX - 10, evt.stageY - 10);
         }
-
     }
 
 }
