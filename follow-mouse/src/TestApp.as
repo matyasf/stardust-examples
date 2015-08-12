@@ -12,8 +12,10 @@ import flash.events.Event;
 import flash.utils.ByteArray;
 
 import idv.cjcat.stardustextended.common.clocks.SteadyClock;
+import idv.cjcat.stardustextended.common.emitters.Emitter;
+import idv.cjcat.stardustextended.common.initializers.Initializer;
+import idv.cjcat.stardustextended.twoD.initializers.PositionAnimated;
 
-import idv.cjcat.stardustextended.twoD.emitters.Emitter2D;
 import idv.cjcat.stardustextended.twoD.starling.StardustStarlingRenderer;
 import idv.cjcat.stardustextended.twoD.zones.Zone;
 
@@ -40,7 +42,7 @@ public class TestApp extends Sprite
     private var infoTF : TextField;
     private var cnt : uint = 0;
     private var explode : CustomExplode;
-    private var emitter : Emitter2D;
+    private var emitter : Emitter;
     private var project : ProjectValueObject;
 
     public function TestApp()
@@ -53,7 +55,7 @@ public class TestApp extends Sprite
         addChild(simContainer);
 
         // optimize the app for 1 emitter with maximum of 5000 particles
-        StardustStarlingRenderer.init(1, 5000);
+        StardustStarlingRenderer.init(2, 5000);
 
         player = new SimPlayer();
         loader = new SimLoader();
@@ -68,8 +70,6 @@ public class TestApp extends Sprite
     private function onSimLoaded(event : flash.events.Event) : void
     {
         project = loader.createProjectInstance();
-        loader.dispose(); // this frees up memory used by the loader. Call it if you don't want to create more instances.
-        loader = null;
         assetInstance = null;
 
         player.setProject(project);
@@ -118,11 +118,20 @@ public class TestApp extends Sprite
     private function onMove(evt : MouseEvent) : void
     {
         //Set the emitter's position to the pointer coordinate
-        for each (var zone : Zone in project.initialPositions)
+        for each (var emitter : Emitter in project.emittersArr)
         {
-            zone.setPosition(evt.stageX, evt.stageY);
+            for each (var init : Initializer in emitter.initializers)
+            {
+                if (init is PositionAnimated) // this initializes sets the starting position of the particles
+                {
+                    var initPos : Vector.<Zone> = PositionAnimated(init).zones;
+                    for each (var zone : Zone in initPos)
+                    {
+                        zone.setPosition(evt.stageX, evt.stageY);
+                    }
+                }
+            }
         }
-
     }
 
 }

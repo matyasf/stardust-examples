@@ -83,8 +83,8 @@ public class TestApp extends Sprite
     {
         loader.removeEventListener(flash.events.Event.COMPLETE, onSimLoaded);
         project = loader.createProjectInstance();
-        loader.destroy(); // call this if you dont plan to create any more instances to free up memory
-        player.setSimulation(project, simContainer);
+        player.setProject(project);
+        player.setRenderTarget(simContainer);
         // step the simulation on every frame
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
     }

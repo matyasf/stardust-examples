@@ -25,9 +25,7 @@
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/appDescriptor.xml" package-file-name="stardust-mobile-example" />
-        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/appDescriptor.xml" package-file-name="stardust-mobile-example">
-          <AirSigningOptions keystore-path="$MODULE_DIR$/../../funkypanda/rinoa-client/certificates/development/ios_development.p12" provisioning-profile-path="$MODULE_DIR$/../../funkypanda/rinoa-client/certificates/development/development.mobileprovision" />
-        </packaging-ios>
+        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/appDescriptor.xml" package-file-name="stardust-mobile-example" />
       </configuration>
     </configurations>
     <compiler-options />

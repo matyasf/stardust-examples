@@ -1,17 +1,16 @@
 package
 {
 
+import idv.cjcat.stardustextended.common.actions.Action;
 import idv.cjcat.stardustextended.common.emitters.Emitter;
 import idv.cjcat.stardustextended.common.particles.Particle;
-import idv.cjcat.stardustextended.twoD.actions.Action2D;
 import idv.cjcat.stardustextended.twoD.geom.Vec2D;
 import idv.cjcat.stardustextended.twoD.geom.Vec2DPool;
-import idv.cjcat.stardustextended.twoD.particles.Particle2D;
 
 /**
  * Creates a shock wave that spreads out from a single point, applying acceleration to particles along the way of propagation.
  */
-public class CustomExplode extends Action2D {
+public class CustomExplode extends Action {
 
     /**
      * The X coordinate of the center.
@@ -74,16 +73,15 @@ public class CustomExplode extends Action2D {
     override public function update(emitter:Emitter, particle:Particle, timeDelta:Number, currentTime:Number):void {
         if (discharged) return;
 
-        var p2D:Particle2D = Particle2D(particle);
         // Stardust has object pools for various objects that it uses often to prevent garbage collection
         // Vect2D is a subClass of Point with some extra functions
-        var r:Vec2D = Vec2DPool.get(p2D.x - x, p2D.y - y);
+        var r:Vec2D = Vec2DPool.get(particle.x - x, particle.y - y);
         var len:Number = r.length;
         if (len < epsilon) len = epsilon;
         if ((len >= _currentInnerRadius) && (len < _currentOuterRadius)) {
             r.length = strength * Math.pow(len, -attenuationPower);
-            p2D.vx += r.x * timeDelta;
-            p2D.vy += r.y * timeDelta;
+            particle.vx += r.x * timeDelta;
+            particle.vy += r.y * timeDelta;
         }
         Vec2DPool.recycle(r);
     }
@@ -96,5 +94,10 @@ public class CustomExplode extends Action2D {
         if (_currentInnerRadius > maxDistance) discharged = true;
     }
 
+    override public function getXMLTagName():String
+    {
+        return "CustomExplode";
+    }
+    
 }
 }

@@ -11,7 +11,10 @@ import flash.events.Event;
 
 import flash.utils.ByteArray;
 
-import idv.cjcat.stardustextended.twoD.emitters.Emitter2D;
+import idv.cjcat.stardustextended.common.emitters.Emitter;
+import idv.cjcat.stardustextended.common.initializers.Initializer;
+
+import idv.cjcat.stardustextended.twoD.initializers.PositionAnimated;
 
 import idv.cjcat.stardustextended.twoD.starling.StardustStarlingRenderer;
 import idv.cjcat.stardustextended.twoD.zones.Zone;
@@ -66,12 +69,10 @@ public class TestApp extends Sprite
     private function onSimLoaded(event : flash.events.Event) : void
     {
         project = loader.createProjectInstance();
-        loader.dispose(); // this frees up memory used by the loader. Call it if you don't want to create more instances.
-        loader = null;
         assetInstance = null;
 
         // this simulation has just one emitter
-        var emitter : Emitter2D = project.emittersArr[0];
+        var emitter : Emitter = project.emittersArr[0];
         // Add a custom action that was not made with the editor
         explode = new CustomExplode(0, 0, 30, 30, 35, 0.91, 6);
         emitter.addAction(explode);
@@ -88,7 +89,6 @@ public class TestApp extends Sprite
     private function onEnterFrame(event : starling.events.Event) : void
     {
         player.stepSimulation();
-
         cnt++;
         if (cnt%60 == 0)
         {
@@ -107,9 +107,19 @@ public class TestApp extends Sprite
     {
         evt.updateAfterEvent();
         //Set the emitter's position to the pointer coordinate
-        for each (var zone : Zone in project.initialPositions)
+        for each (var emitter : Emitter in project.emittersArr)
         {
-            zone.setPosition(evt.stageX - 10, evt.stageY - 10);
+            for each (var init : Initializer in emitter.initializers)
+            {
+                if (init is PositionAnimated) // this initializes sets the starting position of the particles
+                {
+                    var initPos : Vector.<Zone> = PositionAnimated(init).zones;
+                    for each (var zone : Zone in initPos)
+                    {
+                        zone.setPosition(evt.stageX - 10, evt.stageY - 10);
+                    }
+                }
+            }
         }
     }
 

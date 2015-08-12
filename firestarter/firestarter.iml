@@ -5,13 +5,13 @@
       <configuration name="firestarter" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/build">
         <dependencies target-player="15.0">
           <entries>
+            <entry library-id="93f335db-a220-4271-8e57-c93ba72b907c">
+              <dependency linkage="Merged" />
+            </entry>
             <entry module-name="stardust-library" build-configuration-name="stardust-library">
               <dependency linkage="Merged" />
             </entry>
             <entry module-name="stardust-sim-loader" build-configuration-name="stardust-sim-loader">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-id="93f335db-a220-4271-8e57-c93ba72b907c">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -37,7 +37,6 @@
     </content>
     <orderEntry type="jdk" jdkName="AIR15" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="stardust-library" exported="" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
         <properties id="93f335db-a220-4271-8e57-c93ba72b907c" />
@@ -49,5 +48,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="stardust-sim-loader" exported="" />
+    <orderEntry type="module" module-name="stardust-library" exported="" />
   </component>
 </module>
