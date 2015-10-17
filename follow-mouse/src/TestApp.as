@@ -11,13 +11,13 @@ import flash.events.Event;
 
 import flash.utils.ByteArray;
 
-import idv.cjcat.stardustextended.common.clocks.SteadyClock;
-import idv.cjcat.stardustextended.common.emitters.Emitter;
-import idv.cjcat.stardustextended.common.initializers.Initializer;
-import idv.cjcat.stardustextended.twoD.initializers.PositionAnimated;
+import idv.cjcat.stardustextended.clocks.SteadyClock;
+import idv.cjcat.stardustextended.emitters.Emitter;
+import idv.cjcat.stardustextended.initializers.Initializer;
+import idv.cjcat.stardustextended.initializers.PositionAnimated;
 
-import idv.cjcat.stardustextended.twoD.starling.StardustStarlingRenderer;
-import idv.cjcat.stardustextended.twoD.zones.Zone;
+import idv.cjcat.stardustextended.handlers.starling.StardustStarlingRenderer;
+import idv.cjcat.stardustextended.zones.Zone;
 
 import starling.core.Starling;
 

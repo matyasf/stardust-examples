@@ -7,7 +7,7 @@ import com.funkypandagame.stardustplayer.project.ProjectValueObject;
 
 import flash.events.MouseEvent;
 
-import idv.cjcat.stardustextended.common.clocks.*
+import idv.cjcat.stardustextended.clocks.*
 import flash.events.Event;
 
 import flash.utils.ByteArray;

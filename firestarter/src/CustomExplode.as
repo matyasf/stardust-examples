@@ -1,11 +1,11 @@
 package
 {
 
-import idv.cjcat.stardustextended.common.actions.Action;
-import idv.cjcat.stardustextended.common.emitters.Emitter;
-import idv.cjcat.stardustextended.common.particles.Particle;
-import idv.cjcat.stardustextended.twoD.geom.Vec2D;
-import idv.cjcat.stardustextended.twoD.geom.Vec2DPool;
+import idv.cjcat.stardustextended.actions.Action;
+import idv.cjcat.stardustextended.emitters.Emitter;
+import idv.cjcat.stardustextended.particles.Particle;
+import idv.cjcat.stardustextended.geom.Vec2D;
+import idv.cjcat.stardustextended.geom.Vec2DPool;
 
 /**
  * Creates a shock wave that spreads out from a single point, applying acceleration to particles along the way of propagation.
