@@ -49,9 +49,9 @@ public class TestApp extends Sprite
         {
             for each (var emitterVO:EmitterValueObject in project.emitters)
             {
-                // this emitter's particles live on average for 200 frames, thus adding 0.5 particles/frame
+                // this emitter's particles live on average for 4 seconds, thus adding 25 particles/second
                 // will raise the total particles on screen by 100
-                SteadyClock(emitterVO.emitter.clock).ticksPerCall += 0.5;
+                SteadyClock(emitterVO.emitter.clock).ticksPerCall += 25;
             }
 
         });
@@ -63,7 +63,7 @@ public class TestApp extends Sprite
         {
             for each (var emitterVO:EmitterValueObject in project.emitters)
             {
-                SteadyClock(emitterVO.emitter.clock).ticksPerCall -= 0.25;
+                SteadyClock(emitterVO.emitter.clock).ticksPerCall -= 12.5;
             }
         });
         lowerParticlesButton.y = 100;
@@ -89,9 +89,9 @@ public class TestApp extends Sprite
         addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
     }
 
-    private function onEnterFrame(event : starling.events.Event) : void
+    private function onEnterFrame(event : EnterFrameEvent) : void
     {
-        player.stepSimulation();
+        player.stepSimulation(event.passedTime);
         cnt++;
         if (cnt%60 == 0)
         {

@@ -24,7 +24,6 @@ import starling.core.Starling;
 import starling.display.Sprite;
 import starling.events.EnterFrameEvent;
 
-import starling.events.Event;
 import starling.text.TextField;
 import starling.utils.HAlign;
 import starling.utils.VAlign;
@@ -58,7 +57,7 @@ public class TestApp extends Sprite
 
         player = new SimPlayer();
         loader = new SimLoader();
-        loader.addEventListener(flash.events.Event.COMPLETE, onSimLoaded);
+        loader.addEventListener(Event.COMPLETE, onSimLoaded);
         loader.loadSim(assetInstance);
 
         infoTF = new TextField(200, 25, "");
@@ -66,7 +65,7 @@ public class TestApp extends Sprite
         addChild(infoTF);
     }
 
-    private function onSimLoaded(event : flash.events.Event) : void
+    private function onSimLoaded(event : Event) : void
     {
         project = loader.createProjectInstance();
         assetInstance = null;
@@ -74,7 +73,7 @@ public class TestApp extends Sprite
         // this simulation has just one emitter
         var emitter : Emitter = project.emittersArr[0];
         // Add a custom action that was not made with the editor
-        explode = new CustomExplode(0, 0, 30, 30, 35, 0.91, 6);
+        explode = new CustomExplode(0, 0, 30000, 30, 35, 0.91, 6);
         emitter.addAction(explode);
 
         player.setProject(project);
@@ -86,9 +85,9 @@ public class TestApp extends Sprite
         Starling.current.nativeStage.addEventListener(MouseEvent.MOUSE_MOVE, onMove);
     }
 
-    private function onEnterFrame(event : starling.events.Event) : void
+    private function onEnterFrame(event : EnterFrameEvent) : void
     {
-        player.stepSimulation();
+        player.stepSimulation(event.passedTime);
         cnt++;
         if (cnt%60 == 0)
         {

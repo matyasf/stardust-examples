@@ -81,14 +81,14 @@ public class TestApp extends Sprite
         emitter = project.emittersArr[0];
 
         // Add a custom action that was not made with the editor
-        explode = new CustomExplode(0,0, 25, 12, 200, 0);
+        explode = new CustomExplode(0,0, 50000, 12, 200, 0);
         emitter.addAction(explode);
 
         Starling.current.nativeStage.addEventListener(MouseEvent.CLICK, onClick);
         Starling.current.nativeStage.addEventListener(MouseEvent.MOUSE_MOVE, onMove);
     }
 
-    private function onEnterFrame(event : starling.events.Event) : void
+    private function onEnterFrame(event : EnterFrameEvent) : void
     {
         if (explode.discharged == false)
         {
@@ -97,9 +97,9 @@ public class TestApp extends Sprite
         }
         else
         {
-            SteadyClock(emitter.clock).ticksPerCall = 10;
+            SteadyClock(emitter.clock).ticksPerCall = 600;
         }
-        player.stepSimulation();
+        player.stepSimulation(event.passedTime);
 
         cnt++;
         if (cnt%60 == 0)

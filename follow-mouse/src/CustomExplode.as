@@ -49,7 +49,7 @@ public class CustomExplode extends Action {
     private var _currentInnerRadius:Number;
     private var _currentOuterRadius:Number;
 
-    public function CustomExplode(x:Number = 0, y:Number = 0, strength:Number = 5, growSpeed:Number = 40, maxDistance:Number = 200, attenuationPower:Number = 0.1, epsilon:Number = 1) {
+    public function CustomExplode(x:Number = 0, y:Number = 0, strength:Number = 50000, growSpeed:Number = 40, maxDistance:Number = 200, attenuationPower:Number = 0.1, epsilon:Number = 1) {
         this.x = x;
         this.y = y;
         this.strength = strength;
